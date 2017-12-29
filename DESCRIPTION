@@ -1,0 +1,19 @@
+Package: VNDS
+Title: Lay du lieu gia chung khoan thi truong Vietnam
+Version: 1.0.0
+Authors@R: person("Khanh", "Pham Dinh", email = "phamdinhkhanh.tkt53.neu@gmail.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph.
+Depends: R (>= 3.4.3)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+  rvest,
+  httr,
+  stringr,
+  magrittr,
+  dplyr
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

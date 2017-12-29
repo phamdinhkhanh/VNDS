@@ -1,0 +1,44 @@
+---
+title: "VNDS package"
+author: "Pham Dinh Khanh"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+VNDS là một package đầu tiên trên R cho phép bạn lấy dữ liệu giá chứng khoán của tất cả các mã niêm yết trên sàn HNX, HOSE, UPCOM của thị trường chứng khoán Việt Nam. Mục đích của package này là cung cấp một công cụ khai thác dữ liệu chứng khoán cho những nhà phân tích tài chính bằng ngôn ngữ R. Và không chỉ dừng ở đó, mục tiêu của package hướng tới là phân tích biểu đồ, cung cấp những thống kê mô tả về phân phối, lợi tức của chứng khoán và đưa ra các mô hình tối ưu hóa danh mục dựa trên các mô hình rủi ro thị trường.
+
+## KHAI THÁC DỮ LIỆU QUA HÀM getSymbols
+
+Hàm getSymbols là một hàm khai thác dữ liệu có cú pháp đơn giản như sau:
+ **getSymbols(ma chung khoan, ngay bat dau, ngay ket thuc)**
+ 
+Trong đó
+
+- ma chung khoan: Mã code chứng khoán niêm yết trên thị trường gồm 3 kí tự (chẳng hạn ngân hàng công thương Vietcombank là VCB)
+- ngay bat dau: Ngày bắt đầu định dạng yyyy-mm-dd
+- ngay ket thuc: Ngày kết thúc định dạng yyyy-mm-dd
+
+
+```{r, warning=FALSE,message=FALSE}
+library(VNDS)
+library(rvest)
+library(httr)
+library(stringr)
+library(magrittr)
+library(dplyr)
+#lay du lieu chung khoan VND tu ngay "2017-09-10" den ngay "2017-12-29"
+getSymbols("VND","2017-09-10","2017-12-29")
+#sau khi chay lenh tren mot data frame ten VND se duoc tao ra
+head(VND)
+```
