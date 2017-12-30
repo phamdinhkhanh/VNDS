@@ -6,12 +6,13 @@
 #' @param from ngay bat dau dinh dang yyyy-mm-dd
 #' @param to ngay ket thuc dinh dang yyyy-mm-dd
 #' @return mot data frame chua gia chung khoan va khoi luong
-#' @export
-library(rvest)
-library(httr)
-library(stringr)
-library(magrittr)
-library(dplyr)
+#' @export 
+#' @import rvest
+#' @import xml2
+#' @import httr
+#' @import stringr
+#' @import magrittr
+#' @import dplyr
 getSymbols <- function(symbol, from, to){
   url <- "https://www.vndirect.com.vn/portal/thong-ke-thi-truong-chung-khoan/lich-su-gia.shtml"
   #lay page cuoi cung
