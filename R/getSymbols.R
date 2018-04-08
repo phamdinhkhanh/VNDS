@@ -11,9 +11,10 @@
 #' @import xml2
 #' @import httr
 #' @import stringr
-#' @import magrittr
 #' @import dplyr
 
+
+# PRIMARY FUNCTION
 getSymbols <- function(symbol,from,to,src="VND"){
   if(src=="VND"){
     invisible(getSymbolVND(symbol,from,to))
@@ -22,6 +23,8 @@ getSymbols <- function(symbol,from,to,src="VND"){
   }
 }
 
+
+################################## get data VNDirect ###############################################
 getSymbolVND <- function(symbol, from, to){
   url <- "https://www.vndirect.com.vn/portal/thong-ke-thi-truong-chung-khoan/lich-su-gia.shtml"
   #lay page cuoi cung
@@ -31,6 +34,11 @@ getSymbolVND <- function(symbol, from, to){
   symbolData <- matrix(nrow = 0,ncol = 11,byrow = TRUE,dimnames = list(c(),cname))
   for (page in 1:lastPage) {
     #Tao form-data request
+    #load ham tu utils.R
+    if(!exists("dateChar", mode = "function")) {
+      source("R/utils.R")
+    }
+
     fd <- list(
       searchMarketStatisticsView.symbol= symbol,
       strFromDate = dateChar(from),
@@ -146,12 +154,24 @@ getSymbolCP68 <- function (symbol,from,to){
     resp %>% read_html() %>% html_nodes(xpath='//*[@id="content"]/table') %>%
       html_table() %>% as.data.frame() -> tmp
     tmp <- tmp[-1,2:14]
+    #load ham tu utils.R
+    if(!exists("convertDate", mode = "function")) {
+      source("R/utils.R")
+    }
     tmp[,1] <- as.Date(convertDate(tmp[,1]),format = "%Y-%m-%d")
     #check dieu kien de continue
     if(min(tmp[,1]) > to){next}
     #check dieu kien de break
     if(max(tmp[,1]) < from){break}
+    #load ham tu utils.R
+    if(!exists("subComma", mode = "function")) {
+      source("R/utils.R")
+    }
     tmp[,c(6,10:12)] <- apply(tmp[,c(6,10:12)],2,subComma)
+    #load ham tu utils.R
+    if(!exists("convertPercent", mode = "function")) {
+      source("R/utils.R")
+    }
     tmp[,4] <- convertPercent(tmp[,4])
     tmp[,c(2:3,5:13)] <- apply(tmp[,c(2:3,5:13)],2,as.numeric)
 
@@ -168,20 +188,20 @@ getSymbolCP68 <- function (symbol,from,to){
 
 
 #ham convertDate
-convertDate <- function(dt){
-  paste0(str_sub(dt,7,10),"-",str_sub(dt,4,5),"-",str_sub(dt,1,2))
-}
+#convertDate <- function(dt){
+#  paste0(str_sub(dt,7,10),"-",str_sub(dt,4,5),"-",str_sub(dt,1,2))
+#}
 
 #ham thay the dau comma
-subComma <- function(v) {
-  str_replace_all(v,",","")
-}
+#subComma <- function(v) {
+#  str_replace_all(v,",","")
+#}
 
 #chuyen percent dang text sang numeric
-convertPercent <- function(v){
-  str_replace_all(v,"%","") %>% as.numeric()*0.01
-}
+#convertPercent <- function(v){
+#  str_replace_all(v,"%","") %>% as.numeric()*0.01
+#}
 
-
+################################## get data cafeF ###############################################
 
 
