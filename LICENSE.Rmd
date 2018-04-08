@@ -1,0 +1,12 @@
+---
+title: "LICENSE"
+output: html_notebook
+---
+
+Bản quyền © 2017-2018 Phạm Đình Khánh và những người khác.
+
+Giấy phép được cấp miễn phí cho bất kỳ người nào có bản sao của phần mềm này và các tệp tài liệu liên quan ("Phần mềm") để xử lý Phần mềm mà không có giới hạn, bao gồm nhưng không hạn chế quyền sử dụng, sao chép, sửa đổi, hợp nhất , xuất bản, phân phối, cấp phép lại, và / hoặc bán bản sao của Phần mềm và cho phép những người mà Phần mềm được cung cấp để làm như vậy, tùy thuộc vào các điều kiện sau:
+
+Thông báo bản quyền ở trên và thông báo cho phép này sẽ được bao gồm trong tất cả các bản sao hoặc phần quan trọng của Phần mềm.
+
+PHẦN MỀM ĐƯỢC CUNG CẤP “KHANH PHAM DINH”, KHÔNG BẢO ĐẢM NÀO, RÕ RÀNG HAY NGỤ Ý, BAO GỒM NHƯNG KHÔNG GIỚI HẠN Ở CÁC BẢO ĐẢM VỀ KHẢ NĂNG BÁN, SỰ PHÙ HỢP CHO MỘT MỤC ĐÍCH CỤ THỂ VÀ KHÔNG VI PHẠM. TRONG BẤT CỨ TRƯỜNG HỢP TÁC GIẢ HOẶC NGƯỜI GIỮ BẢN QUYỀN SẼ KHÔNG CHỊU TRÁCH NHIỆM CHO BẤT KỲ KHIẾU NẠI, THIỆT HẠI HAY TRÁCH NHIỆM KHÁC, DÙ TRONG HỢP ĐỒNG, LẦM LỖI HOẶC MẶT KHÁC, PHÁT SINH TỪ, BÊN NGOÀI HOẶC BÊN TRONG LIÊN QUAN ĐẾN PHẦN MỀM HOẶC VIỆC SỬ DỤNG HAY GIAO DỊCH KHÁC TRONG PHẦN MỀM.

@@ -1,8 +1,6 @@
 
-#' @export convertNumber,myexport,dateChar,convertDate,subComma,convertPercent
 #' @param v vector can convert
-#' @import stringr
-#' @import dplyr
+#' @export
 
 
 

@@ -1,0 +1,56 @@
+---
+title: "README"
+author: "Pham Dinh Khanh"
+date: "April 8, 2018"
+output: 
+  github_document:
+    html_preview: false
+---
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+options(tibble.print_min = 5, tibble.print_max = 5)
+```
+
+# VNDS <img src="man/figures/logo.jpg" align="right" />
+
+[![Build Status](https://github.com/phamdinhkhanh/VNDS)](https://github.com/phamdinhkhanh/VNDS)
+
+
+## Overview
+
+VNDS là một package đầu tiên trên R cho phép bạn lấy dữ liệu giá chứng khoán của tất cả các mã niêm yết trên sàn HNX, HOSE, UPCOM của thị trường chứng khoán Việt Nam. Mục đích của package này là cung cấp một công cụ khai thác dữ liệu chứng khoán cho những nhà phân tích tài chính bằng ngôn ngữ R. Và không chỉ dừng ở đó, mục tiêu của package hướng tới là phân tích biểu đồ, cung cấp những thống kê mô tả về phân phối, lợi tức của chứng khoán và đưa ra các mô hình tối ưu hóa danh mục dựa trên các mô hình rủi ro thị trường.
+
+## Installation
+
+```{r, eval = FALSE}
+# cai dat devtools:
+# install.packages("devtools")
+# cai dat package tu github:
+devtools::install_github("phamdinhkhanh/VNDS")
+```
+
+Nếu gặp bất kì vấn đề nào về bug trong quá trình cài đặt liên hệ: [github](https://github.com/phamdinhkhanh/VNDS/issues).
+
+## Usage
+
+```{r, message = FALSE}
+library(VNDS)
+
+VND <- getSymbols("VND","2017-01-01","2018-01-01", src="VND")
+
+VND <- getSymbols("VND","2017-01-01","2018-01-01", src="CP68")
+
+VNDBusinessReport <- getBusinessReport("VND",2017,5,"Q1")
+
+VNDBusinessReport <- getBusinessReport("VND",2017,5,"IN_YEAR")
+```
+
+
+
+---
+Lưu ý dự án này được thông qua bởi điều lệ cộng [Điều lệ cộng tác viên](CONDUCT.md).
+Bằng việc tham gia dự án này bạn đã đồng ý tuân theo các điều khoản trên.

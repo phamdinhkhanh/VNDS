@@ -1,10 +1,10 @@
 Package: VNDS
 Title: VNDS Quantitative VietNam Financial Analysis
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: person("Khanh", "Pham Dinh", email = "phamdinhkhanh.tkt53.neu@gmail.com", role = c("aut", "cre"))
 Description: Lay du lieu gia chung khoan thi truong Vietnam
 Depends: R (>= 3.3.0)
-License: What license is it under?
+License: MIT + file LICENSE
 URL: https://github.com/phamdinhkhanh/VNDS
 BugReports: https://github.com/phamdinhkhanh/VNDS/issues
 Encoding: UTF-8
@@ -15,6 +15,7 @@ Imports:
   rvest (>= 0.3.2),
   httr (>= 1.2.1),
   stringr (>= 1.1.0),
+  magrittr (>=1.5),
   dplyr (>= 0.7.0)
 RoxygenNote: 6.0.1
 Suggests: 

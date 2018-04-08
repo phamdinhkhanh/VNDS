@@ -32,11 +32,7 @@ Trong đó
 
 ```{r, warning=FALSE,message=FALSE}
 library(VNDS)
-library(rvest)
-library(httr)
-library(stringr)
-library(magrittr)
-library(dplyr)
+
 #lay du lieu chung khoan VND tu ngay "2017-09-10" den ngay "2017-12-29"
 getSymbols("VND","2017-09-10","2017-12-29")
 #sau khi chay lenh tren mot data frame ten VND se duoc tao ra

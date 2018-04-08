@@ -1,0 +1,17 @@
+---
+title: "CONDUCT"
+output: html_notebook
+---
+
+Nguyên tắc Hành xử của Cộng tác viên
+Là người đóng góp và người duy trì dự án này, chúng tôi cam kết tôn trọng tất cả những người đóng góp thông qua các vấn đề báo cáo, yêu cầu tính năng đăng, cập nhật tài liệu, gửi yêu cầu kéo hoặc các bản vá lỗi, và các hoạt động khác.
+
+Chúng tôi cam kết ngăn chặn việc tham gia vào dự án này bằng những hành vi quấy rối,phân biệt giới tính, khuynh hướng tình dục, khuyết tật, chủng tộc, dân tộc, tuổi tác hay tôn giáo.
+
+Ví dụ về hành vi không được chấp nhận bởi người tham gia bao gồm việc sử dụng ngôn ngữ hoặc hình ảnh tình dục, nhận xét xúc phạm hoặc công kích cá nhân, trolling, quấy rối công cộng hoặc cá nhân, xúc phạm hoặc hành vi không chuyên nghiệp khác.
+
+Người bảo trì dự án có quyền và trách nhiệm xóa, chỉnh sửa, hoặc từ chối nhận xét, cam kết, mã, sửa đổi, vấn đề, và các khoản đóng góp khác không liên quan đến Quy tắc Ứng xử này. Những người bảo trì dự án không tuân theo Quy tắc Ứng xử có thể bị xóa khỏi nhóm dự án.
+
+Các trường hợp hành vi lạm dụng, quấy rối hoặc không thể chấp nhận khác có thể được báo cáo bằng cách mở một vấn đề hoặc liên hệ với một hoặc nhiều người bảo trì dự án.
+
+Quy tắc ứng xử này được điều chỉnh từ Giao ước Cộng tác viên, phiên bản 1.0.0

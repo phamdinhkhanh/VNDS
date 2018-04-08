@@ -1,5 +1,5 @@
+#' @description
 #' Lay ket qua kinh doanh khoan vietNam
-#'
 #' Ham so nay se lay ket qua kinh doanh chung khoan tu nam nam tai chinh ket thuc tro ve n nam truoc, co the lua chon qui hoac nam
 #'
 #' @param symbol Ma chung khoan, gom 3 ki tu
@@ -7,12 +7,10 @@
 #' @param n Số chu kì tài chính (tối đa là 5)
 #' @param period lựa chọn theo năm hay theo quí gồm các giá trị:'IN_YEAR','Q1','Q2','Q3','Q4'
 #' @return mot data frame cac chi so ket qua kinh doanh theo nam tai chinh
-#' @export getBusinessReport
-#' @import rvest
-#' @import xml2
-#' @import httr
-#' @import stringr
-#' @import dplyr
+#' \item{tibble object} {price data}
+#' @export
+#' @example
+#' df <- getBusinessReport("VND",2017,5,"Q1")
 
 
 getBusinessReport <- function (symbol, endYear, n, period){

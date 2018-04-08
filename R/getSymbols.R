@@ -1,17 +1,14 @@
+#' @description
 #' Lay gia chung khoan vietNam
-#'
 #' Ham so nay se lay gia chung khoan tu ngay bat dau den ngay ket thuc
 #'
 #' @param symbol Ma chung khoan, gom 3 ki tu
 #' @param from ngay bat dau dinh dang yyyy-mm-dd
 #' @param to ngay ket thuc dinh dang yyyy-mm-dd
 #' @return mot data frame chua gia chung khoan va khoi luong
-#' @export getSymbols
-#' @import rvest
-#' @import xml2
-#' @import httr
-#' @import stringr
-#' @import dplyr
+#' @export
+#' @example
+#' VND <- getSymbols("VND","2017-01-01","2018-01-01", src="VND")
 
 
 # PRIMARY FUNCTION
