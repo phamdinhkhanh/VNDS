@@ -5,22 +5,42 @@ Authors@R: person("Khanh", "Pham Dinh", email = "phamdinhkhanh.tkt53.neu@gmail.c
 Description: Lay du lieu gia chung khoan thi truong Vietnam
 Depends: R (>= 3.3.0)
 License: What license is it under?
+URL: https://github.com/phamdinhkhanh/VNDS
+BugReports: https://github.com/phamdinhkhanh/VNDS/issues
 Encoding: UTF-8
 LazyData: true
 Depends:
-  R (>= 3.3.0),
-  lubriate (>= 1.6.0),
-  PerformanceAnalytics (>= 1.4.3541),
-  quantmod (>= 0.4-9),
-  tidyverse (>= 1.1.0)
+  R (>= 3.3.0)
 Imports:
   rvest (>= 0.3.2),
   httr (>= 1.2.1),
   stringr (>= 1.1.0),
-  dplyr (>=0.7.2)
+  dplyr (>= 7.0.0)
 RoxygenNote: 6.0.1
-Suggests: knitr,
-    rmarkdown,
-    testthat,
-    forcats
+Suggests: 
+    bit64 (>= 0.9.7),
+    covr (>= 3.0.1),
+    DBI (>= 0.7.14),
+    dbplyr (>= 1.2.0),
+    dtplyr (>= 0.0.2),
+    ggplot2 (>= 2.2.1),
+    hms (>= 0.4.1),
+    knitr (>= 1.19),
+    Lahman (>= 3.0-1),
+    mgcv (>= 1.8.23),
+    microbenchmark (>= 1.4.4),
+    nycflights13 (>= 0.2.2),
+    rmarkdown (>= 1.8),
+    RMySQL (>= 0.10.13),
+    RPostgreSQL (>= 0.6.2),
+    RSQLite (>= 2.0),
+    testthat (>= 2.0.0),
+    withr (>= 2.1.1)
 VignetteBuilder: knitr
+Remotes: 
+    krlmlr/bindrcpp,
+    krlmlr/plogr
+Encoding: UTF-8
+LazyData: yes
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
+RoxygenNote: 6.0.1.9000
