@@ -3,7 +3,7 @@ title: "LICENSE"
 output: html_notebook
 ---
 
-Bản quyền © 2017-2018 Phạm Đình Khánh và những người khác.
+Bản quyền © 2017-2018 Phạm Đình Khánh.
 
 Giấy phép được cấp miễn phí cho bất kỳ người nào có bản sao của phần mềm này và các tệp tài liệu liên quan ("Phần mềm") để xử lý Phần mềm mà không có giới hạn, bao gồm nhưng không hạn chế quyền sử dụng, sao chép, sửa đổi, hợp nhất , xuất bản, phân phối, cấp phép lại, và / hoặc bán bản sao của Phần mềm và cho phép những người mà Phần mềm được cung cấp để làm như vậy, tùy thuộc vào các điều kiện sau:
 

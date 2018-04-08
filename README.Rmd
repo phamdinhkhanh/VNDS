@@ -22,7 +22,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 ## Overview
 
-VNDS là một package đầu tiên trên R cho phép bạn lấy dữ liệu giá chứng khoán của tất cả các mã niêm yết trên sàn HNX, HOSE, UPCOM của thị trường chứng khoán Việt Nam. Mục đích của package này là cung cấp một công cụ khai thác dữ liệu chứng khoán cho những nhà phân tích tài chính bằng ngôn ngữ R. Và không chỉ dừng ở đó, mục tiêu của package hướng tới là phân tích biểu đồ, cung cấp những thống kê mô tả về phân phối, lợi tức của chứng khoán và đưa ra các mô hình tối ưu hóa danh mục dựa trên các mô hình rủi ro thị trường.
+VNDS là một package đầu tiên trên R cho phép bạn lấy dữ liệu giá chứng khoán của tất cả các mã niêm yết trên sàn HNX, HOSE, UPCOM của thị trường chứng khoán Việt Nam. Mục đích của package này là cung cấp một công cụ khai thác dữ liệu chứng khoán cho những nhà phân tích tài chính bằng ngôn ngữ R bao gồm giá cả, thông tin tài chính và hoạt động kinh doanh của các công ty. Và không chỉ dừng ở đó, package hướng tới việc cung cấp các biểu đồ phân tích, thống kê mô tả về phân phối, lợi tức của chứng khoán và đưa ra các mô hình tối ưu hóa danh mục, mô hình rủi ro thị trường.
 
 ## Installation
 
@@ -39,11 +39,12 @@ Nếu gặp bất kì vấn đề nào về bug trong quá trình cài đặt li
 
 ```{r, message = FALSE}
 library(VNDS)
-
+#Lấy thông tin giá chứng khoán
 VND <- getSymbols("VND","2017-01-01","2018-01-01", src="VND")
 
 VND <- getSymbols("VND","2017-01-01","2018-01-01", src="CP68")
 
+#Lấy báo cáo hoạt động kinh doanh
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"Q1")
 
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"IN_YEAR")
@@ -52,5 +53,5 @@ VNDBusinessReport <- getBusinessReport("VND",2017,5,"IN_YEAR")
 
 
 ---
-Lưu ý dự án này được thông qua bởi điều lệ cộng [Điều lệ cộng tác viên](CONDUCT.md).
+Lưu ý dự án này được thông qua bởi điều lệ cộng [Điều lệ cộng tác viên](CONDUCT.Rmd).
 Bằng việc tham gia dự án này bạn đã đồng ý tuân theo các điều khoản trên.
