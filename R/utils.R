@@ -2,8 +2,10 @@
 #' @param v vector can convert
 #' @export
 
-
-
+###############################  chung cho cac ham ############################
+removeBlankCol <- function(df){
+  df[,which(unlist(lapply(df, function(x) sum(nchar(as.vector(x)))>0)))]
+}
 ###############################  getBusinessReport ########################################
 #Loai bo dau ',' giua cac chu so va convert ve dang numeric
 convertNumber <- function(v) {

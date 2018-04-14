@@ -7,7 +7,7 @@
 #' @param n Số chu kì tài chính (tối đa là 5)
 #' @param period lựa chọn theo năm hay theo quí gồm các giá trị:'IN_YEAR','Q1','Q2','Q3','Q4'
 #' @return mot data frame cac chi so ket qua kinh doanh theo nam tai chinh
-#' \item{tibble object} {price data}
+#' \item{tibble object} {business report data}
 #' @export
 #' @example
 #' df <- getBusinessReport("VND",2017,5,"Q1")
@@ -47,7 +47,7 @@ getBusinessReport <- function (symbol, endYear, n, period){
   #Chi lay cac cot quan trong
   df <- df[,c(8,3,26:30)]
   #Loai bo cac cot khong co gia tri
-  df <- df[,which(unlist(lapply(df, function(x) sum(nchar(as.vector(x)))>0)))]
+  df <- removeBlankCol(df)
   #ConvertNumber
   #load ham tu utils.R
   if(!exists("convertNumber", mode = "function")) {
@@ -55,7 +55,7 @@ getBusinessReport <- function (symbol, endYear, n, period){
   }
 
   df[,-c(1:2)] <- lapply(df[,-c(1:2)],convertNumber)
-  return(df)
+  return(data.frame(symBols=symbol,df))
 }
 
 
