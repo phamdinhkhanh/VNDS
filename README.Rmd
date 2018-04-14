@@ -39,9 +39,9 @@ VND <- getSymbols("VND","2017-01-01","2018-01-01", src="CP68")
 
 #2.Lấy bảng cân đối kế toán
 #Cho 5 năm tài chính gần nhất kể từ 2017
-VNDBalanceSheet <- getBalanceSheetReport("VND",2017,5,"IN_YEAR")
+VNDBalanceSheet <- getBalanceSheet("VND",2017,5,"IN_YEAR")
 #Cho 5 quí gần nhất kể từ Q4/2017
-VNDBalanceSheet <- getBalanceSheetReport("VND",2017,5,"Q4")
+VNDBalanceSheet <- getBalanceSheet("VND",2017,5,"Q4")
 
 #Lấy báo cáo hoạt động kinh doanh
 #Tương tự như getBalanceSheetReport
