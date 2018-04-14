@@ -6,14 +6,6 @@ output:
   github_document:
     html_preview: false
 ---
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-options(tibble.print_min = 5, tibble.print_max = 5)
-```
 
 # VNDS <img src="man/figures/logo.jpg" align="right" />
 
@@ -39,12 +31,20 @@ Nếu gặp bất kì vấn đề nào về bug trong quá trình cài đặt li
 
 ```{r, message = FALSE}
 library(VNDS)
-#Lấy thông tin giá chứng khoán
+#1.Lấy thông tin giá chứng khoán
+#Nguồn từ VND
 VND <- getSymbols("VND","2017-01-01","2018-01-01", src="VND")
-
+#Nguồn từ CP68
 VND <- getSymbols("VND","2017-01-01","2018-01-01", src="CP68")
 
+#2.Lấy bảng cân đối kế toán
+#Cho 5 năm tài chính gần nhất kể từ 2017
+VNDBalanceSheet <- getBalanceSheetReport("VND",2017,5,"IN_YEAR")
+#Cho 5 quí gần nhất kể từ Q4/2017
+VNDBalanceSheet <- getBalanceSheetReport("VND",2017,5,"Q4")
+
 #Lấy báo cáo hoạt động kinh doanh
+#Tương tự như getBalanceSheetReport
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"Q1")
 
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"IN_YEAR")
