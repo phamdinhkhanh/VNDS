@@ -54,7 +54,7 @@ tq_candlechart <- function(data, width, colour,
     xlim <- nrow(data)-c(max(xlim),min(xlim))
   }
 
-
+  print(1)
   p <- ggplot(data, aes(x)) +
     geom_linerange(aes(ymin = low, ymax = high)) +
     geom_rect(aes(xmin = order(x) - 1/2*width,
@@ -81,7 +81,7 @@ tq_candlechart <- function(data, width, colour,
 
   # theme(axis.text.x=element_text(angle=angle, hjust=0.5, vjust=0.5))
 
-
+  print(2)
   if(any(data$open == data$close)) {
     xadjust <- which(data$open == data$close)
     p <- p + geom_segment(data = subset(data, open == close),
