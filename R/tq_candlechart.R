@@ -75,9 +75,11 @@ tq_candlechart <- function(data, width, colour,
       x="Date",
       y="Price",
       title=title
-    ) +
+    )
+  #+
 
-    theme(axis.text.x=element_text(angle=angle, hjust=0.5, vjust=0.5))
+
+  # theme(axis.text.x=element_text(angle=angle, hjust=0.5, vjust=0.5))
 
 
   if(any(data$open == data$close)) {
