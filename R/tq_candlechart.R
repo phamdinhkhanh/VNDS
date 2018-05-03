@@ -45,6 +45,12 @@ tq_candlechart <- function(data, width, colour,
   if(!class(xlim) == "numeric" && length(xlim) == 2){
     tryCatch(xlim <- as.Date(xlim),finally = "xlim must be a Numeric or Date vector")
     xlim <- which(data$date %in% xlim)
+    if(is.na(xlim[1])){
+      xlim[1] <- nrow(data)
+    }
+    if(is.na(xlim[2])){
+      xlim[2] <- 1
+    }
     xlim <- nrow(data)-c(max(xlim),min(xlim))
   }
 
