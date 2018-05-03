@@ -20,7 +20,6 @@
 #            title="VND",
 #            xlim = c("2018-01-10","2018-04-20"))
 
-
 tq_candlechart <- function(data, width, colour,
                         date_breaks = '1 month',
                         date_labels = '%Y-%m-%d',
@@ -29,7 +28,7 @@ tq_candlechart <- function(data, width, colour,
                         angle=-45,
                         ...){
 
-  x <- index(data)
+  x <- 1:nrow(data)
   vbreaks <- str_split(str_trim(date_breaks)," ") %>% unlist()
 
   npred <- vbreaks[str_detect(vbreaks,"^[0-9]")]
