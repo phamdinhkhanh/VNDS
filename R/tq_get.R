@@ -11,7 +11,7 @@
 #' @export
 #' @example
 #' VND <- tq_get("VND","2017-01-01","2018-01-01", src="CP68", minimal = FALSE)
-
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 # PRIMARY FUNCTION
 tq_get <- function(symbol,from,to,src="VND", minimal = TRUE,...){
@@ -58,7 +58,6 @@ tq_get <- function(symbol,from,to,src="VND", minimal = TRUE,...){
 
 ################################## get data VNDirect ###############################################
 tq_get_vnd <- function(symbol, from, to,...){
-  globalVariables(".")
   url <- "https://www.vndirect.com.vn/portal/thong-ke-thi-truong-chung-khoan/lich-su-gia.shtml"
   #lay page cuoi cung
   lastPage <- getLastPage(url,symbol,from,to)
@@ -190,7 +189,6 @@ dateChar <- function(dateTime){
 ################################## get data CP68 ###############################################
 
 tq_get_cp68 <- function (symbol,from,to,...){
-  globalVariables(".")
   url<-"http://www.cophieu68.vn/historyprice.php"
 
   #lay cac trang cuoi cung
