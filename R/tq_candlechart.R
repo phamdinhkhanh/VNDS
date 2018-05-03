@@ -37,12 +37,13 @@ tq_candlechart <- function(data, width, colour,
   xlabels <- as.vector(to.period(x=xts(data$date,
                        order.by = data$date),
                        period = pred, k = npred)[,1])
-
+  print(-1)
   xlabels <- as.Date(xlabels)
 
   xbreaks <- which(data$date %in% xlabels)
 
   if(!class(xlim) == "numeric" && length(xlim) == 2){
+    print(0)
     tryCatch(xlim <- as.Date(xlim),finally = "xlim must be a Numeric or Date vector")
     xlim <- which(data$date %in% xlim)
     if(is.na(xlim[1])){
