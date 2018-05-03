@@ -16,7 +16,8 @@ Imports:
   httr (>= 1.2.1),
   stringr (>= 1.1.0),
   magrittr,
-  dplyr (>= 0.7.0)
+  dplyr (>= 0.7.0),
+  xts
 RoxygenNote: 6.0.1
 Suggests: 
     bit64 (>= 0.9.7),

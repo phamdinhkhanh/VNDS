@@ -31,6 +31,66 @@ Nếu gặp bất kì vấn đề nào về bug trong quá trình cài đặt li
 
 ```{r, message = FALSE}
 library(VNDS)
+
+##########################I. Viết hàm theo kiểu tidyquant##############################
+
+#1.Lấy thông tin giá chứng khoán
+
+#Nguồn từ VND
+VND <- tq_get(symbol = "VND",
+              from = "2017-01-01",
+              to = "2018-01-01", 
+              src = "VND",
+              minimal = FALSE)
+
+#Nguồn từ CP68
+VND <- tq_get(symbol = "VND",
+              from = "2017-01-01",
+              to = "2018-01-01", 
+              src = "CP68",
+              minimal = FALSE)
+
+#chỉ lấy các trường open, high, low, close, adjusted và volume
+VND <- tq_get("VND","2017-01-01","2018-01-01")
+
+#2.Lấy bảng cân đối kế toán
+#Cho 5 năm tài chính gần nhất kể từ 2017
+VNDBalanceSheet <- tq_balancesheet(symbol = "VND",
+                                   endYear = 2017,
+                                   n = 5,
+                                   period = "IN_YEAR")
+
+#Cho 5 quí gần nhất kể từ Q4/2017
+VNDBalanceSheet <- tq_balancesheet(symbol = "VND",
+                                   endYear = 2017,
+                                   n = 5,
+                                   period = "Q4")
+
+#3.Lấy báo cáo hoạt động kinh doanh
+#Tương tự như getBalanceSheetReport
+VNDBusinessReport <- tq_business_report(symbol = "VND", 
+                                        endyear = 2017,
+                                        n = 5, 
+                                        period = "Q1")
+
+VNDBusinessReport <- tq_business_report(symbol = "VND",
+                                        endyear = 2017,
+                                        n = 5,
+                                        period = "IN_YEAR")
+
+#4.Visualization data
+VND <- tq_get("VND","2017-01-01","2018-01-01")
+p <-  tq_candlechart(data=VND,
+            width=0.9,
+            colour=c('red','darkred'),
+            date_breaks = '1 month',
+            date_labels = '%Y-%m-%d',
+            title="VND",
+            xlim = c("2018-01-10","2018-04-20"))
+p
+
+##########################II. Viết hàm theo kiểu quantmod##############################
+
 #1.Lấy thông tin giá chứng khoán
 #Nguồn từ VND
 VND <- getSymbols("VND","2017-01-01","2018-01-01", src="VND")
@@ -43,11 +103,11 @@ VNDBalanceSheet <- getBalanceSheet("VND",2017,5,"IN_YEAR")
 #Cho 5 quí gần nhất kể từ Q4/2017
 VNDBalanceSheet <- getBalanceSheet("VND",2017,5,"Q4")
 
-#Lấy báo cáo hoạt động kinh doanh
+#3.Lấy báo cáo hoạt động kinh doanh
 #Tương tự như getBalanceSheetReport
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"Q1")
-
 VNDBusinessReport <- getBusinessReport("VND",2017,5,"IN_YEAR")
+
 ```
 
 
