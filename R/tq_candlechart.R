@@ -11,20 +11,28 @@
 #' @example
 # tq_candlechart('VND','2018-01-01','2018-05-01',colour = c('red','darkred'),show.volume = FALSE)
 
-tq_candlechart <- function(symbol, from, to, colour, show.volume = TRUE,...){
+globalVariables(c(".","%<>%","c",".I",".N"))
+
+tq_candlechart <- function(symbol, from, to, 
+                           colour=c('#17BECF','#7F7F7F'), 
+                           show.volume = TRUE,...){
   # create dataframe
   if(quantmod::is.OHLC(symbol)){
+    print(1)
     df <- symbol
     title <- base::substitute(symbol)
   } else {
-    df <- VNDS::tq_get(symbol,from,to)
+    source("R/tq_get.R")
+    df <- tq_get(symbol,from,to)
+    title <- symbol
   }
+  
   # create Bollinger Bands
   bbands <- TTR::BBands(df[,c("high","low","close")])
-
+  
   # join data
   df <- cbind(df, data.frame(bbands[,1:3]))
-
+  
   # colors column for increasing and decreasing
   for (i in 1:length(df[,1])) {
     if (df$close[i] >= df$open[i]) {
@@ -33,29 +41,29 @@ tq_candlechart <- function(symbol, from, to, colour, show.volume = TRUE,...){
       df$direction[i] = 'Decreasing'
     }
   }
-
+  
   i <- list(line = list(color = colour[1]))
   d <- list(line = list(color = colour[2]))
-
+  
   # plot candlestick chart
   p <- df %>%
-    plot_ly(x = ~date, type="candlestick",
-            open = ~open, close = ~close,
-            high = ~high, low = ~low, name = title,
-            increasing = i, decreasing = d) %>%
-    add_lines(x = ~date, y = ~up , name = "B Bands",
-              line = list(color = '#ccc', width = 0.5),
-              legendgroup = "Bollinger Bands",
-              hoverinfo = "none", inherit = F) %>%
-    add_lines(x = ~date, y = ~dn, name = "B Bands",
-              line = list(color = '#ccc', width = 0.5),
-              legendgroup = "Bollinger Bands", inherit = F,
-              showlegend = FALSE, hoverinfo = "none") %>%
-    add_lines(x = ~date, y = ~mavg, name = "Mv Avg",
-              line = list(color = '#E377C2', width = 0.5),
-              hoverinfo = "none", inherit = F) %>%
-    layout(yaxis = list(title = "Price"))
-
+    plotly::plot_ly(x = ~date, type="candlestick",
+                    open = ~open, close = ~close,
+                    high = ~high, low = ~low, name = title,
+                    increasing = i, decreasing = d) %>%
+    plotly::add_lines(x = ~date, y = ~up , name = "B Bands",
+                      line = list(color = '#ccc', width = 0.5),
+                      legendgroup = "Bollinger Bands",
+                      hoverinfo = "none", inherit = F) %>%
+    plotly::add_lines(x = ~date, y = ~dn, name = "B Bands",
+                      line = list(color = '#ccc', width = 0.5),
+                      legendgroup = "Bollinger Bands", inherit = F,
+                      showlegend = FALSE, hoverinfo = "none") %>%
+    plotly::add_lines(x = ~date, y = ~mavg, name = "Mv Avg",
+                      line = list(color = '#E377C2', width = 0.5),
+                      hoverinfo = "none", inherit = F) %>%
+    plotly::layout(yaxis = list(title = "Price"))
+  
   # create rangeselector buttons
   rs <- list(visible = TRUE, x = 0.5, y = -0.055,
              xanchor = 'center', yref = 'paper',
@@ -77,32 +85,32 @@ tq_candlechart <- function(symbol, from, to, colour, show.volume = TRUE,...){
                     step='month',
                     stepmode='backward')
              ))
-
+  
   show.volume <- ifelse(is.OHLCV(df),TRUE,FALSE)
-
+  
   if(show.volume){
     # plot volume bar chart
     pp <- df %>%
-      plot_ly(x=~date, y=~volume, type='bar', name = paste0(title," Volume"),
-              color = ~direction, colors = colour) %>%
-      layout(yaxis = list(title = "Volume"))
-
+      plotly::plot_ly(x=~date, y=~volume, type='bar', name = paste0(title," Volume"),
+                      color = ~direction, colors = colour) %>%
+      plotly::layout(yaxis = list(title = "Volume"))
+    
     # subplot with shared x axis
-    (p <- subplot(p, pp, heights = c(0.7,0.2), nrows=2,
-                  shareX = TRUE, titleY = TRUE) %>%
-        layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
-               xaxis = list(rangeselector = rs),
-               legend = list(orientation = 'h', x = 0.5, y = 1,
-                             xanchor = 'center', yref = 'paper',
-                             font = list(size = 10),
-                             bgcolor = 'transparent'))) }
+    (p <- plotly::subplot(p, pp, heights = c(0.7,0.2), nrows=2,
+                          shareX = TRUE, titleY = TRUE) %>%
+        plotly::layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
+                       xaxis = list(rangeselector = rs),
+                       legend = list(orientation = 'h', x = 0.5, y = 1,
+                                     xanchor = 'center', yref = 'paper',
+                                     font = list(size = 10),
+                                     bgcolor = 'transparent'))) }
   else {
     (p <- p %>%
-       layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
-              xaxis = list(rangeselector = rs),
-              legend = list(orientation = 'h', x = 0.5, y = 1,
-                            xanchor = 'center', yref = 'paper',
-                            font = list(size = 10),
-                            bgcolor = 'transparent')))}
+       plotly::layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
+                      xaxis = list(rangeselector = rs),
+                      legend = list(orientation = 'h', x = 0.5, y = 1,
+                                    xanchor = 'center', yref = 'paper',
+                                    font = list(size = 10),
+                                    bgcolor = 'transparent')))}
 }
 
