@@ -1,9 +1,9 @@
 #' @description
 #' Lay bao cao tai chinh
 #' @param symbol Ma chung khoan, gom 3 ki tu
-#' @param endYear năm tài chính kết thúc
-#' @param n Số chu kì tài chính (tối đa là 5)
-#' @param period lựa chọn theo năm hay theo quí gồm các giá trị:'IN_YEAR','Q1','Q2','Q3','Q4'
+#' @param endYear nam ket thuc
+#' @param n so chu ki tai chinh (toi da la 5)
+#' @param period lua chon theo nam voi 'IN_YEAR' va theo qui voi 'Q1','Q2','Q3','Q4'
 #' @return mot data frame cac chi so bao cao tai chinh theo nam tai chinh
 #' \item{tibble object} {balanceSheet data}
 #' @return mot data frame chua gia chung khoan va khoi luong
