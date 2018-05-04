@@ -1,94 +1,108 @@
 #' @description
 #' Lay gia chung khoan vietNam
-#' Ham so nay se lay gia chung khoan tu ngay bat dau den ngay ket thuc
+#' Ham so nay se ve bieu do tu ngay bat dau den ngay ket thuc
 #'
-#' @param data du lieu dang data.frame theo kieu ohlc (tuc la gom open, high, low, close price)
-#' @param width do rong cua mot nen (nam trong khoang tu 0 den 1)
-#' @param colour vector dinh dang mau sac (gom 2 mau dai dien cho tang va giam)
-#' @param date_breaks khoang cach giua cac diem tick marker tren truc x
-#' @param date_labels dinh dang Date cua tick marker
-#' @param title tieu de cua do thi
-#' @param xlim gioi han cua truc x, co the la thoi gian c(start,end) hoac quan sat c(startPosition, endPosition)
-#' @return mot data frame chua gia chung khoan va khoi luong
+#' @param symbol du lieu dang data.frame theo kieu ohlc (tuc la gom open, high, low, close price) hoac ten ma chung khoan
+#' @param from thoi gian bat dau
+#' @param to thoi gian ket thuc
+#' @param colour mau sac cua than nen (gom mau tang va mau giam)
+#' @return mot do thi gia chung khoan
 #' @export
 #' @example
-#   tq_candlechart(data=VND,
-#            width=0.9,
-#            colour=c('red','darkred'),
-#            date_breaks = '2 week',
-#            date_labels = '%Y-%m-%d',
-#            title="VND",
-#            xlim = c("2018-01-10","2018-04-20"))
+# tq_candlechart('VND','2018-01-01','2018-05-01',colour = c('red','darkred'),show.volume = FALSE)
 
-tq_candlechart <- function(data, width, colour,
-                        date_breaks = '1 month',
-                        date_labels = '%Y-%m-%d',
-                        title = "",
-                        xlim = c(1,nrow(data)),
-                        angle=-45,
-                        ...){
+tq_candlechart <- function(symbol, from, to, colour, show.volume = TRUE,...){
+  # create dataframe
+  if(quantmod::is.OHLC(symbol)){
+    df <- symbol
+    title <- base::substitute(symbol)
+  } else {
+    df <- VNDS::tq_get(symbol,from,to)
+  }
+  # create Bollinger Bands
+  bbands <- TTR::BBands(df[,c("high","low","close")])
 
-  x <- 1:nrow(data)
-  vbreaks <- str_split(str_trim(date_breaks)," ") %>% unlist()
+  # join data
+  df <- cbind(df, data.frame(bbands[,1:3]))
 
-  npred <- vbreaks[str_detect(vbreaks,"^[0-9]")]
-  pred <- vbreaks[!str_detect(vbreaks,"^[0-9]")]
-
-  xlabels <- as.vector(to.period(x=xts(data$date,
-                       order.by = data$date),
-                       period = pred, k = npred)[,1])
-
-  xlabels <- as.Date(xlabels)
-
-  xbreaks <- which(data$date %in% xlabels)
-
-  if(!class(xlim) == "numeric" && length(xlim) == 2){
-    print(0)
-    tryCatch(xlim <- as.Date(xlim),finally = "xlim must be a Numeric or Date vector")
-    xlim <- which(data$date %in% xlim)
-    if(is.na(xlim[1])){
-      xlim[1] <- nrow(data)
+  # colors column for increasing and decreasing
+  for (i in 1:length(df[,1])) {
+    if (df$close[i] >= df$open[i]) {
+      df$direction[i] = 'Increasing'
+    } else {
+      df$direction[i] = 'Decreasing'
     }
-    if(is.na(xlim[2])){
-      xlim[2] <- 1
-    }
-    xlim <- nrow(data)-c(max(xlim),min(xlim))
   }
 
-  p <- ggplot(data, aes(x)) +
-    geom_linerange(aes(ymin = low, ymax = high)) +
-    geom_rect(aes(xmin = order(x) - 1/2*width,
-                  xmax = order(x) + 1/2*width,
-                  ymin = open,
-                  ymax = close,
-                  fill = ifelse(close >= open, "down","up"))) +
-    guides(fill = FALSE,
-           colour = FALSE) +
+  i <- list(line = list(color = colour[1]))
+  d <- list(line = list(color = colour[2]))
 
-    scale_fill_manual(labels = c("up","down"),
-                        values = colour)  +
+  # plot candlestick chart
+  p <- df %>%
+    plot_ly(x = ~date, type="candlestick",
+            open = ~open, close = ~close,
+            high = ~high, low = ~low, name = title,
+            increasing = i, decreasing = d) %>%
+    add_lines(x = ~date, y = ~up , name = "B Bands",
+              line = list(color = '#ccc', width = 0.5),
+              legendgroup = "Bollinger Bands",
+              hoverinfo = "none", inherit = F) %>%
+    add_lines(x = ~date, y = ~dn, name = "B Bands",
+              line = list(color = '#ccc', width = 0.5),
+              legendgroup = "Bollinger Bands", inherit = F,
+              showlegend = FALSE, hoverinfo = "none") %>%
+    add_lines(x = ~date, y = ~mavg, name = "Mv Avg",
+              line = list(color = '#E377C2', width = 0.5),
+              hoverinfo = "none", inherit = F) %>%
+    layout(yaxis = list(title = "Price"))
 
-    scale_x_continuous(breaks = xbreaks,
-                       labels = format(xlabels,date_labels),
-                       limits = xlim) +
-    labs(
-      x="Date",
-      y="Price",
-      title=title
-    ) +
+  # create rangeselector buttons
+  rs <- list(visible = TRUE, x = 0.5, y = -0.055,
+             xanchor = 'center', yref = 'paper',
+             font = list(size = 9),
+             buttons = list(
+               list(count=1,
+                    label='RESET',
+                    step='all'),
+               list(count=1,
+                    label='1 YR',
+                    step='year',
+                    stepmode='backward'),
+               list(count=3,
+                    label='3 MO',
+                    step='month',
+                    stepmode='backward'),
+               list(count=1,
+                    label='1 MO',
+                    step='month',
+                    stepmode='backward')
+             ))
 
-  theme(axis.text.x=element_text(angle=angle, hjust=0.5, vjust=0.5))
+  show.volume <- ifelse(is.OHLCV(df),TRUE,FALSE)
 
-  if(any(data$open == data$close)) {
-    xadjust <- which(data$open == data$close)
-    p <- p + geom_segment(data = subset(data, open == close),
-                          aes(x = order(xadjust) - 1/2*width,
-                              xend = order(xadjust) + 1/2*width,
-                              y = close,
-                              yend = close))
-  }
+  if(show.volume){
+    # plot volume bar chart
+    pp <- df %>%
+      plot_ly(x=~date, y=~volume, type='bar', name = paste0(title," Volume"),
+              color = ~direction, colors = colour) %>%
+      layout(yaxis = list(title = "Volume"))
 
-  p
+    # subplot with shared x axis
+    (p <- subplot(p, pp, heights = c(0.7,0.2), nrows=2,
+                  shareX = TRUE, titleY = TRUE) %>%
+        layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
+               xaxis = list(rangeselector = rs),
+               legend = list(orientation = 'h', x = 0.5, y = 1,
+                             xanchor = 'center', yref = 'paper',
+                             font = list(size = 10),
+                             bgcolor = 'transparent'))) }
+  else {
+    (p <- p %>%
+       layout(title = paste(title,": ",min(df$date)," - ",max(df$date)),
+              xaxis = list(rangeselector = rs),
+              legend = list(orientation = 'h', x = 0.5, y = 1,
+                            xanchor = 'center', yref = 'paper',
+                            font = list(size = 10),
+                            bgcolor = 'transparent')))}
 }
-
 
