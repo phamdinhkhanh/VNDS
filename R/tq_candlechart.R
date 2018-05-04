@@ -18,13 +18,12 @@ tq_candlechart <- function(symbol, from, to,
                            show.volume = TRUE,...){
   # create dataframe
   if(quantmod::is.OHLC(symbol)){
-    print(1)
     df <- symbol
     title <- base::substitute(symbol)
   } else {
-    source("R/tq_get.R")
-    df <- tq_get(symbol,from,to)
-    title <- symbol
+    stopifnot(is.character(symbol))
+      df <- tq_get(symbol,from,to)
+      title <- symbol
   }
   
   # create Bollinger Bands
