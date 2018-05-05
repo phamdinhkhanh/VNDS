@@ -135,8 +135,8 @@ tq_get_vnd <- function(symbol, from, to,...){
   #doi ten cho bang
   #assign(symbol,symbolData,envir = .GlobalEnv)
   #rm(list = "symbolData",envir = .GlobalEnv)
+  symbolData <- tibble::as_tibble(symbolData, validate = FALSE)
   cat(paste0("#",symbol," from ",from, " to ",to," already cloned "))
-
   invisible(symbolData)
 }
 
@@ -282,6 +282,7 @@ tq_get_cp68 <- function (symbol,from,to,...){
   symbolData <- symbolData[,c(1,3:4,7:9,5,2,6,10:13)]
   #symbolData <- data.frame(symbolData, row.names = symbolData[,1])
   #symbolData <- filter(symbolData,and(date >= from, date <= to))
+  symbolData <- tibble::as_tibble(symbolData, validate = FALSE)
   cat(paste0("#",symbol," from ",from, " to ",to," already cloned "))
   invisible(symbolData)
 }

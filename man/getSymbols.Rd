@@ -19,3 +19,5 @@ mot data frame chua gia chung khoan va khoi luong
 \description{
 Ham so nay se lay gia chung khoan tu ngay bat dau den ngay ket thuc
 }
+
+
