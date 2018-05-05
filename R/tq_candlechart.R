@@ -124,7 +124,7 @@ tq_candlechart <- function(symbol, from, to,
 # create dataframe
   if(quantmod::is.OHLC(symbol)){
    df <- symbol
-   title <- as.character(substitute(df))
+   title <- as.character(substitute(symbol))
   } else {
    stopifnot(is.character(symbol))
      df <- tq_get(symbol,from,to)
@@ -162,7 +162,7 @@ tq_candlechart_ohlc <- function(df,
   
   # join data
   df <- cbind(df, data.frame(bbands[,1:3]))
-  print(1)
+  
   # colors column for increasing and decreasing
   for (i in 1:length(df[,1])) {
     if (df$close[i] >= df$open[i]) {
@@ -174,7 +174,7 @@ tq_candlechart_ohlc <- function(df,
   
   i <- list(line = list(color = colour[1]))
   d <- list(line = list(color = colour[2]))
-  print(2)
+  
   # plot candlestick chart
   p <- df %>%
     plotly::plot_ly(x = ~date, type="candlestick",
@@ -193,7 +193,7 @@ tq_candlechart_ohlc <- function(df,
                       line = list(color = '#E377C2', width = 0.5),
                       hoverinfo = "none", inherit = F) %>%
     plotly::layout(yaxis = list(title = "Price"))
-  print(3)
+  
   # create rangeselector buttons
   rs <- list(visible = TRUE, x = 0.5, y = -0.055,
              xanchor = 'center', yref = 'paper',
@@ -219,12 +219,11 @@ tq_candlechart_ohlc <- function(df,
   show.volume <- ifelse(is.OHLCV(df),TRUE,FALSE)
   if(show.volume){
     # plot volume bar chart
-    print(4)
     pp <- df %>%
       plotly::plot_ly(x=~date, y=~volume, type='bar', name = paste0(title," Volume"),
                       color = ~direction, colors = colour) %>%
       plotly::layout(yaxis = list(title = "Volume"))
-    print(5)
+    
     # subplot with shared x axis
     (p <- plotly::subplot(p, pp, heights = c(0.7,0.2), nrows=2,
                           shareX = TRUE, titleY = TRUE) %>%
