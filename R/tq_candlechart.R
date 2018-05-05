@@ -155,8 +155,8 @@ tq_candlechart_ohlc <- function(df,
                               show.volume = TRUE,
                               title = "",...){
   stopifnot(quantmod::is.OHLC(df))
-  # Symbol
-  title <- as.character(substitute(df))
+  # title
+  if(title == ""){title <- as.character(substitute(df))}
   # create Bollinger Bands
   bbands <- TTR::BBands(df[,c("high","low","close")])
   
