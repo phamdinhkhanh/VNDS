@@ -119,15 +119,18 @@ globalVariables(c(".","%<>%","c",".I",".N"))
 
 tq_candlechart <- function(symbol, from, to, 
                         colour=c('#17BECF','#7F7F7F'),
-                        show.volume = TRUE,...){
+                        show.volume = TRUE,
+                        title = "",...){
 # create dataframe
   if(quantmod::is.OHLC(symbol)){
    df <- symbol
+   title <- as.character(substitute(df))
   } else {
    stopifnot(is.character(symbol))
      df <- tq_get(symbol,from,to)
+     title <- symbol
   }
-  tq_candlechart_ohlc(df,colour,show.volume)
+  tq_candlechart_ohlc(df,colour,show.volume,title)
 }
 
 
@@ -135,10 +138,12 @@ tq_candlechart <- function(symbol, from, to,
 
 tq_candlechart_symbol <- function(symbol, from, to, 
                            colour=c('#17BECF','#7F7F7F'), 
-                           show.volume = TRUE,...){
+                           show.volume = TRUE,
+                           title = "",...){
   # create dataframe
   df <- tq_get(symbol,from,to)
-  tq_candlechart_ohlc(df,colour,show.volume)
+  title <- symbol
+  tq_candlechart_ohlc(df,colour,show.volume, title)
 }
 
 
@@ -147,7 +152,8 @@ tq_candlechart_symbol <- function(symbol, from, to,
 
 tq_candlechart_ohlc <- function(df, 
                               colour=c('#17BECF','#7F7F7F'), 
-                              show.volume = TRUE,...){
+                              show.volume = TRUE,
+                              title = "",...){
   stopifnot(quantmod::is.OHLC(df))
   # Symbol
   title <- as.character(substitute(df))
