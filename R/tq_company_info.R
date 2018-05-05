@@ -5,7 +5,7 @@
 #' @return thong tin cong ty
 #' @export
 #' @example
-#' VND_Info <- getCompanyInfo("VND")
+#' VND_Info <- tq_company_info("VND")
 
 
 tq_company_info <-  function(symbol) {
