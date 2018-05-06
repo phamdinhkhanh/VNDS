@@ -22,8 +22,10 @@ Imports:
   quantmod,
   zoo,
   plotly,
+  ggplot2,
   scales,
-  gridExtra
+  gridExtra,
+  bdscales
 RoxygenNote: 6.0.1
 Suggests: 
     bit64 (>= 0.9.7),
