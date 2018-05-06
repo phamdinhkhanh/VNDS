@@ -25,7 +25,7 @@ Imports:
   ggplot2,
   scales,
   gridExtra,
-  bdscales
+  bdscale
 RoxygenNote: 6.0.1
 Suggests: 
     bit64 (>= 0.9.7),
