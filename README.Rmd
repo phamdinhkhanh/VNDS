@@ -69,12 +69,12 @@ VNDBalanceSheet <- tq_balancesheet(symbol = "VND",
 #3.Lấy báo cáo hoạt động kinh doanh
 #Tương tự như getBalanceSheetReport
 VNDBusinessReport <- tq_business_report(symbol = "VND", 
-                                        endyear = 2017,
+                                        endYear = 2017,
                                         n = 5, 
                                         period = "Q1")
 
 VNDBusinessReport <- tq_business_report(symbol = "VND",
-                                        endyear = 2017,
+                                        endYear = 2017,
                                         n = 5,
                                         period = "IN_YEAR")
 

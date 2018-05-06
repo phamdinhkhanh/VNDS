@@ -12,15 +12,24 @@
 #' @return mot do thi gia chung khoan
 #' @export
 #' @example
-#   tq_candlechart_khanh(data=VND,
-#            width=0.9,
-#            colour=c('red','darkred'),
-#            date_breaks = '2 week',
-#            date_labels = '%Y-%m-%d',
-#            title="VND",
-#            xlim = c("2018-01-10","2018-04-20"))
+# tq_candlechart_khanh_old(data=VND,
+#          width=0.9,
+#          colour=c('red','darkred'),
+#          date_breaks = '2 week',
+#          date_labels = '%Y-%m-%d',
+#          title="VND",
+#          xlim = c("2018-01-10","2018-04-20"))
 
-tq_candlechart_khanh <- function(data, width, colour,
+
+
+
+# tq_candlechart_khanh(VND,colour = c('red','darkred'), 
+#                      show.volume = TRUE, 
+#                      title = 'VND Price', xbreak=5,
+#                      xformat='%Y %b')
+
+
+tq_candlechart_khanh_old <- function(data, width, colour,
                         date_breaks = '1 month',
                         date_labels = '%Y-%m-%d',
                         title = "",
@@ -90,5 +99,90 @@ tq_candlechart_khanh <- function(data, width, colour,
 
   p
 }
+
+
+#tq_candlechart_khanh-------------------------------------------------------------
+
+tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = NA, xbreak=10,
+                                 xformat=NA,...){
+  if(!quantmod::is.OHLC(data)){stop('Data must be a OHLC tible object')}
+  if(is.na(colour)){colour <- c('#17BECF','#7F7F7F')}
+  if(is.na(title)) {title <-  as.character(substitute(data))}
+  
+  print(1)
+  p_price <- data %>% ggplot(aes(x=date, ymin=low, ymax=high, 
+                               lower=pmin(open,close), upper=pmax(open,close), 
+                               fill=open<close, group=date, 
+                               middle=pmin(open,close))) + 
+    
+    geom_boxplot(stat='identity') +
+    
+    scale_fill_manual(labels = c('Increase','Decrease'), 
+                      values = colour) +
+    
+    scale_x_bd(business.dates=data$date, 
+               max.major.breaks=xbreak, 
+               labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat))) +
+    
+    labs(
+      x="Date",
+      y="Price",
+      fill = NULL,
+      title = paste(title,": ",min(data$date)," - ",max(data$date))
+    ) + 
+    
+    theme_minimal() 
+  
+  if(show.volume){
+    p_price <- p_price + 
+      theme(legend.position='top', 
+            legend.direction="horizontal",
+            legend.margin = margin(5, 5, 5, 5),
+            legend.box.margin=margin(-10,-10,-10,-10),
+            plot.title=element_text(size=16, color="darkgreen", hjust = 0.5),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank(),
+            axis.title.x=element_blank(),
+            axis.text.x=element_blank(),
+            axis.ticks.x=element_blank()) 
+  } else {
+    p_price <- p_price + 
+      theme(legend.position='top', 
+            legend.direction="horizontal",
+            legend.margin = margin(5, 5, 5, 5),
+            legend.box.margin=margin(-10,-10,-10,-10),
+            plot.title=element_text(size=16, color="darkgreen", hjust = 0.5),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank()) 
+  }
+      
+    
+  print(2)
+  if(quantmod::is.OHLCV(data)) {
+  p_volume <- data %>% ggplot(aes(x=date, y=volume, fill=open<close, group=date)) +
+    geom_col(show.legend = FALSE) +
+    scale_x_bd(business.dates=data$date,
+               max.major.breaks=xbreak,
+               labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat)))   +
+    scale_fill_manual(labels = c('Increase','Decrease'),
+                      values = colour) +
+    labs(
+      x="Date",
+      y="Volume"
+    )
+  }
+
+  print(3)
+  if(show.volume) {
+    if(!quantmod::is.OHLCV(data)){ warning('Data miss volume colume')}
+
+    suppressWarnings(gridExtra::grid.arrange
+                     (p_price, p_volume, nrow = 2,heights = c(2, 0.7)) )
+  } else {
+    p_price
+  }
+}
+
+
 
 

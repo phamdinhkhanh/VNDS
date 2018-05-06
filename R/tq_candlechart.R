@@ -216,7 +216,7 @@ tq_candlechart_ohlc <- function(df,
                     stepmode='backward')
              ))
   
-  show.volume <- ifelse(is.OHLCV(df),TRUE,FALSE)
+  show.volume <- ifelse(quantmod::is.OHLCV(df),TRUE,FALSE)
   if(show.volume){
     # plot volume bar chart
     pp <- df %>%
