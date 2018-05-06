@@ -120,7 +120,7 @@ tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = 
     scale_fill_manual(labels = c('Increase','Decrease'), 
                       values = colour) +
     
-    scale_x_bd(business.dates=data$date, 
+    bdscale::scale_x_bd(business.dates=data$date, 
                max.major.breaks=xbreak, 
                labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat))) +
     
@@ -161,7 +161,7 @@ tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = 
   if(quantmod::is.OHLCV(data)) {
   p_volume <- data %>% ggplot(aes(x=date, y=volume, fill=open<close, group=date)) +
     geom_col(show.legend = FALSE) +
-    scale_x_bd(business.dates=data$date,
+    bdscale::scale_x_bd(business.dates=data$date,
                max.major.breaks=xbreak,
                labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat)))   +
     scale_fill_manual(labels = c('Increase','Decrease'),
