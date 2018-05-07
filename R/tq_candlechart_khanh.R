@@ -10,6 +10,7 @@
 #' @param title tieu de cua do thi
 #' @param xlim gioi han cua truc x, co the la thoi gian c(start,end) hoac quan sat c(startPosition, endPosition)
 #' @return mot do thi gia chung khoan
+#' @import ggplot2
 #' @export
 #' @example
 # tq_candlechart_khanh_old(data=VND,
@@ -112,7 +113,7 @@ tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = 
   print(1)
   p_price <- data %>% ggplot(aes(x=date, ymin=low, ymax=high, 
                                lower=pmin(open,close), upper=pmax(open,close), 
-                               fill=open<close, group=date, 
+                               fill=open>close, group=date, 
                                middle=pmin(open,close))) + 
     
     geom_boxplot(stat='identity') +
@@ -120,7 +121,7 @@ tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = 
     scale_fill_manual(labels = c('Increase','Decrease'), 
                       values = colour) +
     
-    bdscale::scale_x_bd(business.dates=data$date, 
+    bdscale::scale_x_bd(business.dates=sort(data$date), 
                max.major.breaks=xbreak, 
                labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat))) +
     
@@ -159,9 +160,9 @@ tq_candlechart_khanh <- function(data, colour = NA, show.volume = TRUE, title = 
     
   print(2)
   if(quantmod::is.OHLCV(data)) {
-  p_volume <- data %>% ggplot(aes(x=date, y=volume, fill=open<close, group=date)) +
+  p_volume <- data %>% ggplot(aes(x=date, y=volume, fill=open>close, group=date)) +
     geom_col(show.legend = FALSE) +
-    bdscale::scale_x_bd(business.dates=data$date,
+    bdscale::scale_x_bd(business.dates=sort(data$date),
                max.major.breaks=xbreak,
                labels=scales::date_format(ifelse(is.na(xformat),"%b %y",xformat)))   +
     scale_fill_manual(labels = c('Increase','Decrease'),

@@ -13,8 +13,56 @@
 #' VND <- tq_get("VND","2017-01-01","2018-01-01", src="CP68", minimal = FALSE)
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
-# PRIMARY FUNCTION
-tq_get <- function(symbol,from,to,src="VND", minimal = TRUE,...){
+
+
+
+# Return multiple or single data -------------------------------------------------------------------
+tq_get <- function(symbols,from,to,src="VND", minimal = TRUE,...){
+  stopifnot(is.vector(symbols))
+  if(length(symbols) == 1){
+    tq_get_single(symbol,from,to,src,minimal)
+  } else {
+    ls <- list()
+    ev <- new.env()
+    for (symbol in symbols){
+      assign(paste0(symbol),
+             data.frame(tq_get_single(symbol,from,to,src,minimal)),
+             envir = ev)
+    }
+    i <- 0
+    for (symbol in symbols){
+      i <- i + 1
+      ls[[i]] <- get(symbol, envir = ev)
+    }
+    names(ls) <- symbols
+    ls
+  }
+}
+
+#tq_get(c('VND','VPB'),'2018-01-01','2018-03-01') -> ls
+
+#ls$VND %>% tibble::as_tibble() %>% VNDS::tq_candlechart()
+#ls$VND %>% as.matrix() %>% tibble::as_tibble()
+#ls$VND %>% View()
+# symbols = c('VND','VPB')
+# from = '2018-01-01'
+# to = '2018-02-01'
+# src = 'VND'
+# minimal = TRUE
+
+
+# Export data as quantmod::getSymbols-----------------------------------------------------
+tq_getSymbols <- function(symbols,from,to,src="VND", minimal = TRUE,...){
+  for (symbol in symbols){
+    assign(paste0(symbol),
+      lsSymbols <- VNDS::tq_get(symbol,from,to,src,minimal),
+      envir = .GlobalEnv)
+  }
+}
+
+
+# Get 1 symbol -----------------------------------------------------------------------------
+tq_get_single <- function(symbol,from,to,src="VND", minimal = TRUE,...){
   if(minimal){
     colname<- c("date",
                 "open",
