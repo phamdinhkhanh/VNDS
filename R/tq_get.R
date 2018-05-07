@@ -20,7 +20,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 tq_get <- function(symbols,from,to,src="VND", minimal = TRUE,...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    tq_get_single(symbol,from,to,src,minimal)
+    tq_get_single(symbols,from,to,src,minimal)
   } else {
     ls <- list()
     ev <- new.env()
