@@ -26,13 +26,13 @@ tq_get <-
            return.type='tibble',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    VNDS::tq_get_single(symbols,from,to,src,minimal)
+    VNDS::tq_get_single(symbols,from,to,src,minimal,return.type)
   } else {
     ls <- list()
     ev <- new.env()
     for (symbol in symbols){
       assign(paste0(symbol),
-             data.frame(VNDS::tq_get_single(symbol,from,to,src,minimal)),
+             data.frame(VNDS::tq_get_single(symbol,from,to,src,minimal,return.type)),
              envir = ev)
     }
     i <- 0
@@ -62,18 +62,17 @@ tq_get_xts <-
            from,
            to,
            src = 'VND',
-           minimal = TRUE, ...){
+           minimal = TRUE,
+           return.type = 'xts',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    VNDS::tq_get_single(symbols, from, to, src, minimal) %>%
-      xts(symbol,order.by=.$date);
+    VNDS::tq_get_single(symbols, from, to, src, minimal, return.type)
   } else {
     list <- list()
     i <- 0
     for(symbol in symbols){
       i <- i+1
-      ls[[i]]  <- VNDS::tq_get_single(symbol, from, to, src, minimal) %>%
-                    xts(symbol,order.by=.$date);
+      ls[[i]]  <- VNDS::tq_get_single(symbol, from, to, src, minimal, return.type)
     }
     names(ls) <- symbols
     ls
@@ -106,11 +105,11 @@ tq_get_single <-
            minimal = TRUE,
            return.type = 'tibble',
            ...){
-    switch(return.type){
+    switch(return.type,
       tibble = VNDS::tq_get_single_tibble(symbol,from,to,src,minimal),
       xts = VNDS::tq_get_single(symbols, from, to, src, minimal) %>%
         xts(symbol,order.by=.$date)
-    }
+      )
   }
 
 # Get 1 symbol df-----------------------------------------------------------------------------
