@@ -24,8 +24,8 @@
 
 
 
-# tq_candlechart_khanh(VND,colour = c('red','darkred'), 
-#                      show.volume = TRUE, 
+# tq_candlechart_khanh(VND,colour = c('red','darkred'),
+#                      show.volume = TRUE,
 #                      title = 'VND Price', xbreak=5,
 #                      xformat='%Y %b')
 

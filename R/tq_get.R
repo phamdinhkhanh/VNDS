@@ -17,16 +17,22 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 
 # Return multiple or single data -------------------------------------------------------------------
-tq_get <- function(symbols,from,to,src="VND", minimal = TRUE,...){
+tq_get <-
+  function(symbols,
+           from,
+           to,
+           src="VND",
+           minimal = TRUE,
+           return.type='tibble',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    tq_get_single(symbols,from,to,src,minimal)
+    VNDS::tq_get_single(symbols,from,to,src,minimal)
   } else {
     ls <- list()
     ev <- new.env()
     for (symbol in symbols){
       assign(paste0(symbol),
-             data.frame(tq_get_single(symbol,from,to,src,minimal)),
+             data.frame(VNDS::tq_get_single(symbol,from,to,src,minimal)),
              envir = ev)
     }
     i <- 0
@@ -50,19 +56,71 @@ tq_get <- function(symbols,from,to,src="VND", minimal = TRUE,...){
 # src = 'VND'
 # minimal = TRUE
 
+# Export data as xts object ----------------------------------------------------------------
+tq_get_xts <-
+  function(symbols,
+           from,
+           to,
+           src = 'VND',
+           minimal = TRUE, ...){
+  stopifnot(is.vector(symbols))
+  if(length(symbols) == 1){
+    VNDS::tq_get_single(symbols, from, to, src, minimal) %>%
+      xts(symbol,order.by=.$date);
+  } else {
+    list <- list()
+    i <- 0
+    for(symbol in symbols){
+      i <- i+1
+      ls[[i]]  <- VNDS::tq_get_single(symbol, from, to, src, minimal) %>%
+                    xts(symbol,order.by=.$date);
+    }
+    names(ls) <- symbols
+    ls
+  }
+}
+
 
 # Export data as quantmod::getSymbols-----------------------------------------------------
-tq_getSymbols <- function(symbols,from,to,src="VND", minimal = TRUE,...){
-  for (symbol in symbols){
+tq_getSymbols <-
+  function(symbols,
+           from,
+           to,
+           src="VND",
+           minimal = TRUE,
+           return.type = 'tibble',...){
+  for (symbol in unique(symbols)){
     assign(paste0(symbol),
-      lsSymbols <- VNDS::tq_get(symbol,from,to,src,minimal),
+      lsSymbols <- VNDS::tq_get(symbol,from,to,src,minimal, return.type),
       envir = .GlobalEnv)
   }
 }
 
 
 # Get 1 symbol -----------------------------------------------------------------------------
-tq_get_single <- function(symbol,from,to,src="VND", minimal = TRUE,...){
+tq_get_single <-
+  function(symbol,
+           from,
+           to,
+           src="VND",
+           minimal = TRUE,
+           return.type = 'tibble',
+           ...){
+    switch(return.type){
+      tibble = VNDS::tq_get_single_tibble(symbol,from,to,src,minimal),
+      xts = VNDS::tq_get_single(symbols, from, to, src, minimal) %>%
+        xts(symbol,order.by=.$date)
+    }
+  }
+
+# Get 1 symbol df-----------------------------------------------------------------------------
+tq_get_single_tibble <-
+  function(symbol,
+           from,
+           to,
+           src="VND",
+           minimal = TRUE,
+           ...){
   if(minimal){
     colname<- c("date",
                 "open",
