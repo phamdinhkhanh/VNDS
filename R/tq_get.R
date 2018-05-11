@@ -26,13 +26,13 @@ tq_get <-
            return.type='tibble',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    VNDS::tq_get_single(symbols,from,to,src,minimal,return.type)
+    tq_get_single(symbols,from,to,src,minimal,return.type)
   } else {
     ls <- list()
     ev <- new.env()
     for (symbol in symbols){
       assign(paste0(symbol),
-             data.frame(VNDS::tq_get_single(symbol,from,to,src,minimal,return.type)),
+             data.frame(tq_get_single(symbol,from,to,src,minimal,return.type)),
              envir = ev)
     }
     i <- 0
@@ -47,7 +47,7 @@ tq_get <-
 
 #tq_get(c('VND','VPB'),'2018-01-01','2018-03-01') -> ls
 
-#ls$VND %>% tibble::as_tibble() %>% VNDS::tq_candlechart()
+#ls$VND %>% tibble::as_tibble() %>% tq_candlechart()
 #ls$VND %>% as.matrix() %>% tibble::as_tibble()
 #ls$VND %>% View()
 # symbols = c('VND','VPB')
@@ -66,13 +66,13 @@ tq_get_xts <-
            return.type = 'xts',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
-    VNDS::tq_get_single(symbols, from, to, src, minimal, return.type)
+    tq_get_single(symbols, from, to, src, minimal, return.type)
   } else {
     list <- list()
     i <- 0
     for(symbol in symbols){
       i <- i+1
-      ls[[i]]  <- VNDS::tq_get_single(symbol, from, to, src, minimal, return.type)
+      ls[[i]]  <- tq_get_single(symbol, from, to, src, minimal, return.type)
     }
     names(ls) <- symbols
     ls
@@ -90,7 +90,7 @@ tq_getSymbols <-
            return.type = 'tibble',...){
   for (symbol in unique(symbols)){
     assign(paste0(symbol),
-      lsSymbols <- VNDS::tq_get(symbol,from,to,src,minimal, return.type),
+      lsSymbols <- tq_get(symbol,from,to,src,minimal, return.type),
       envir = .GlobalEnv)
   }
 }
@@ -106,8 +106,8 @@ tq_get_single <-
            return.type = 'tibble',
            ...){
     switch(return.type,
-      tibble = VNDS::tq_get_single_tibble(symbol,from,to,src,minimal),
-      xts = VNDS::tq_get_single(symbols, from, to, src, minimal) %>%
+      tibble = tq_get_single_tibble(symbol,from,to,src,minimal),
+      xts = tq_get_single_tibble(symbols, from, to, src, minimal) %>%
         xts(symbol,order.by=.$date)
       )
   }
