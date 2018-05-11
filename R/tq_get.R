@@ -108,7 +108,7 @@ tq_get_single <-
     switch(return.type,
       tibble = tq_get_single_tibble(symbol,from,to,src,minimal),
       xts = tq_get_single_tibble(symbols, from, to, src, minimal) %>%
-        xts(symbol,order.by=.$date)
+        xts(order.by=.$date)
       )
   }
 
