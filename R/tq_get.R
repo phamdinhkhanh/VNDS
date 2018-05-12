@@ -23,25 +23,37 @@ tq_get <-
            to,
            src="VND",
            minimal = TRUE,
+           stack = FALSE,
            return.type='tibble',...){
   stopifnot(is.vector(symbols))
   if(length(symbols) == 1){
     tq_get_single(symbols,from,to,src,minimal,return.type)
   } else {
-    ls <- list()
     ev <- new.env()
     for (symbol in symbols){
       assign(paste0(symbol),
-             data.frame(tq_get_single(symbol,from,to,src,minimal,return.type)),
+             #data.frame(tq_get_single(symbol,from,to,src,minimal,return.type)),
+             tibble::as_tibble(tq_get_single(symbol,from,to,src,minimal,return.type)),
              envir = ev)
     }
-    i <- 0
-    for (symbol in symbols){
-      i <- i + 1
-      ls[[i]] <- get(symbol, envir = ev)
+    if(stack){
+      stk_return <- data.frame()
+      for(symbol in symbols){
+        df <- data.frame(symbol = symbol, get(symbol, envir = ev))
+        stk_return <- rbind(stk_return,df)
+      }
+      tibble::as_tibble(stk_return)
     }
-    names(ls) <- symbols
-    ls
+    else {
+      ls <- list()
+      i <- 0
+      for (symbol in symbols){
+        i <- i + 1
+        ls[[i]] <- get(symbol, envir = ev)
+      }
+      names(ls) <- symbols
+      ls
+    }
   }
 }
 
