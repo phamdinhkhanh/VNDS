@@ -141,6 +141,9 @@ tq_get_single_tibble <-
                 "volume",
                 "adjusted")
 
+    if (is.na(from)){from <- '1900-01-01'}
+    if (is.na(to)){to <- as.character(Sys.Date()-1)}
+    
     if(src=="VND"){
       extractData <- tq_get_vnd(symbol,from,to)
 
