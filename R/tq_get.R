@@ -141,7 +141,7 @@ tq_get_single_tibble <-
                 "volume",
                 "adjusted")
     if (missing(to)){to <- as.character(Sys.Date()-1)}
-    if (missing(from)){from <- as.charater(Sys.Date-366)}
+    if (missing(from)){from <- as.charater(Sys.Date()-366)}
     
     if(src=="VND"){
       extractData <- tq_get_vnd(symbol,from,to)
