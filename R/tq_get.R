@@ -127,8 +127,8 @@ tq_get_single <-
 # Get 1 symbol df-----------------------------------------------------------------------------
 tq_get_single_tibble <-
   function(symbol,
-           from=NA,
-           to=NA,
+           from,
+           to,
            src="VND",
            minimal = TRUE,
            ...){
@@ -140,8 +140,8 @@ tq_get_single_tibble <-
                 "close",
                 "volume",
                 "adjusted")
-    if (is.na(to)){to <- as.character(Sys.Date()-1)}
-    if (is.na(from)){from <- as.Date(to-365)}
+    if (missing(to)){to <- as.character(Sys.Date()-1)}
+    if (missing(from)){from <- as.Date(to-365)}
     
     if(src=="VND"){
       extractData <- tq_get_vnd(symbol,from,to)
