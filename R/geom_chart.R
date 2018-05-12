@@ -32,7 +32,6 @@
 #'    \item [coord_x_date()] lay du lieu trong mot khoang thoi gian nao do cua do thi
 #' }
 #'
-#' @name geom_chart
 #'
 #' @export
 #'
@@ -110,7 +109,7 @@ StatLinerangeBC <- ggplot2::ggproto("StatLinerangeBC", Stat,
                                     }
 )
 
-#Tạo một ggproto kết thừa từ Stat
+#Tao mot ggproto ke thua tu Stat
 StatSegmentLeftBC <- ggplot2::ggproto("StatSegmentLeftBC", Stat,
                                       required_aes = c("x", "open", "high", "low", "close"),
                                       
@@ -148,14 +147,14 @@ StatSegmentRightBC <- ggplot2::ggproto("StatSegmentRightBC", Stat,
                                        }
 )
 
-#Tạo một ggproto GeomLinerangeBC kết thừa từ GeomLinerange.
+#Tao mot ggproto GeomLinerangeBC ke thua tu GeomLinerange.
 GeomLinerangeBC <- ggproto("GeomLinerangeBC", GeomLinerange,
                            default_aes = aes(size = 0.5,
                                              linetype = 1,
                                              alpha = NA)
 )
 
-#Tạo một ggproto GeomSegmentBC kết thừa từ GeomSegment.
+#Tao mot ggproto GeomSegmentBC ke thua tu GeomSegment.
 GeomSegmentBC <- ggproto("GeomSegmentBC", GeomSegment,
                          default_aes = aes(size = 0.5,
                                            linetype = 1,
@@ -172,8 +171,8 @@ geom_candlestick <- function(mapping = NULL, data = NULL, stat = "identity",
                              color_up = "darkblue", color_down = "red",
                              fill_up = "darkblue", fill_down = "red",
                              ...) {
-  #Tạo một layer có ggproto = StatLinerangeBC
-  #ggproto là object có chức năng render dữ liệu vào đồ thị
+  #Tao mot layer co ggproto = StatLinerangeBC
+  #ggproto la object co chuc nang render du lieu vao do thi
   linerange <- ggplot2::layer(
     stat = StatLinerangeBC, geom = GeomLinerangeBC, data = data, mapping = mapping,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
