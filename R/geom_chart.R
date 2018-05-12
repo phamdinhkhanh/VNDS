@@ -32,6 +32,7 @@
 #'    \item [coord_x_date()] lay du lieu trong mot khoang thoi gian nao do cua do thi
 #' }
 #'
+#' @name geom_chart
 #'
 #' @export
 #'
@@ -58,6 +59,8 @@
 #'                  ylim = c(100, 130))
 #'                  
 #Bar chart-------------------------------------------------------------------------------
+#' @rdname geom_chart
+#' @export
 
 geom_barchart <- function(mapping = NULL, data = NULL, stat = "identity",
                           position = "identity", na.rm = TRUE, show.legend = NA,
@@ -163,7 +166,8 @@ GeomSegmentBC <- ggproto("GeomSegmentBC", GeomSegment,
 
 
 # Candlestick Chart ---------------------------------------------------------------------------------
-
+#' @rdname geom_chart
+#' @export
 
 geom_candlestick <- function(mapping = NULL, data = NULL, stat = "identity",
                              position = "identity", na.rm = TRUE, show.legend = NA,
