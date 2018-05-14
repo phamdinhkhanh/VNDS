@@ -13,6 +13,8 @@
 #' VND <- tq_get("VND","2017-01-01","2018-01-01", src="CP68", minimal = FALSE)
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
+# Support query pretty much data -------------------------------------------------------------------
+
 tq_bigquery <- function(symbols,
                         from,
                         to,
