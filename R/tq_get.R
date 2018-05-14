@@ -24,6 +24,7 @@ tq_bigquery <- function(symbols,
   loop <- floor(length(symbols)/n)
   odd <-  ifelse(length(symbols) - n*loop == 0, n,length(symbols) - n*loop)
   ls_total <- list()
+  
   if(loop == 0){
     end <- odd
     start <- 1
@@ -74,6 +75,7 @@ tq_bigquery <- function(symbols,
       }
     }
   }
+  
   names(ls_total) <- symbols
   ls_total
 }
