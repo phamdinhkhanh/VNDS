@@ -5,15 +5,17 @@
 #' @return thong tin cong ty
 #' @export
 #' @example
-#' VND_Info <- tq_company_info("VND")
+#' VND_Info <- tq_company_info(c("VND","VPB"))
 
 
-tq_company_info <-  function(symbol) {
-  url <- paste0("https://finfo-api.vndirect.com.vn/stocks?symbol=",symbol)
-  resp <- GET(url) %>% content()
-  resp <- resp$data %>% unlist() %>% as.data.frame() %>% t()
-  row.names(resp) <- 1
-  return(resp)
+tq_company_info <-  function(symbols) {
+    url <- paste0("https://finfo-api.vndirect.com.vn/stocks?status=all")
+    resp <- GET(url) %>% content('text') %>% jsonlite::fromJSON()
+    if(missing(symbols)){
+      resp$data
+    } else {
+      resp$data %>% filter(symbol %in% symbols) 
+    }
 }
 
 
