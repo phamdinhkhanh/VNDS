@@ -29,7 +29,7 @@ tq_bigquery <- function(symbols,
     start <- 1
     iterSymbols <- symbols[start:end]
     
-    print(paste0(start,'-',end,' : ',iterSymbols))
+    print(cat(start,'-',end,' : ',iterSymbols))
     
     assign('ls',
            tq_get(iterSymbols,from,to,src,minimal,stack,return.type),ev)
@@ -56,7 +56,7 @@ tq_bigquery <- function(symbols,
       }
       
       v_match <- match(iterSymbols, symbols)
-      print(paste0(v_match[1],'-',v_match[length(v_match)],' : ',iterSymbols))
+      print(cat(v_match[1],'-',v_match[length(v_match)],' : ',iterSymbols))
       
       assign('ls',
              tq_get(iterSymbols,from,to,src,minimal,stack,return.type),ev)
