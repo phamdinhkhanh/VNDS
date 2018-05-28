@@ -12,7 +12,28 @@
 #' VND <- tq_balancesheet("VND",2017,5,"Q1")
 
 
-tq_balancesheet <- function(symbol, endYear, n, period){
+tq_balancesheet <- function(symbols, endYear, n, period){
+  stopifnot(is.vector(symbols))
+  ev <- new.env()
+  for(symbol in symbols){
+    assign(paste0(symbol),
+           tq_balancesheet_single(symbol, endYear, n, period),
+           envir = ev)
+  }
+
+  ls <- list()
+  for(i in 1:length(symbols)){
+    ls[[i]] <- get(symbols[i], ev)
+  }
+
+  names(ls) <- symbols
+  if(length(symbols) == 1){
+    ls <- ls[[1]]
+  }
+  ls
+}
+
+tq_balancesheet_single <- function(symbol, endYear, n, period){
   url <- paste0("https://www.vndirect.com.vn/portal/bang-can-doi-ke-toan/",symbol,".shtml")
 
   fd <- list(

@@ -142,9 +142,9 @@ tq_get_xts <-
            from,
            to,
            src = 'VND',
-           minimal = TRUE,
-           return.type = 'xts',...){
+           minimal = TRUE,...){
   stopifnot(is.vector(symbols))
+  return.type <- 'xts'
   if(length(symbols) == 1){
     tq_get_single(symbols, from, to, src, minimal, return.type)
   } else {

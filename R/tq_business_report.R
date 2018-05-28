@@ -13,7 +13,29 @@
 #' df <- tq_business_report("VND",2017,5,"Q1")
 
 
-tq_business_report <- function (symbol, endYear, n, period){
+tq_business_report <- function(symbols, endYear, n, period){
+  stopifnot(is.vector(symbols))
+  ev <- new.env()
+  for(symbol in symbols){
+    assign(paste0(symbol),
+           tq_business_report_single(symbol, endYear, n, period),
+           envir = ev)
+  }
+
+  ls <- list()
+  for(i in 1:length(symbols)){
+    ls[[i]] <- get(symbols[i], ev)
+  }
+
+  names(ls) <- symbols
+  if(length(symbols) == 1){
+    ls <- ls[[1]]
+  }
+  ls
+}
+
+
+tq_business_report_single <- function (symbol, endYear, n, period){
   #Danh lua server save cookie
   url <- paste0("https://www.vndirect.com.vn/portal/bao-cao-ket-qua-kinh-doanh/", symbol, ".shtml")
   resp <- GET(url)
