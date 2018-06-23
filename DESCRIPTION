@@ -10,7 +10,8 @@ BugReports: https://github.com/phamdinhkhanh/VNDS/issues
 Encoding: UTF-8
 LazyData: true
 Depends:
-  R (>= 3.3.0)
+  R (>= 3.3.0),
+  tidyverse
 Imports:
   rvest (>= 0.3.2),
   httr (>= 1.2.1),
