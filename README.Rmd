@@ -1,5 +1,5 @@
 
-## Installation
+# Installation
 
 ```{r, eval = FALSE}
 # cai dat devtools:
@@ -10,6 +10,6 @@ devtools::install_github("phamdinhkhanh/VNDS")
 
 Bug issues link: [github](https://github.com/phamdinhkhanh/VNDS/issues).
 
-## Guideline
+# Guideline
 
 http://rpubs.com/phamdinhkhanh/392610
