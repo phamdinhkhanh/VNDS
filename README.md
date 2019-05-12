@@ -8,6 +8,7 @@ install.packages("devtools")
 Because of `devtools` is available in cran so we can use command `install.packages()` for installation. But for `VNDS` package we just remain in develop mode. So you have to install though `devtools` as following:
 
 ```
+library("devtools")
 devtools::install_github("phamdinhkhanh/VNDS")
 ```
 
